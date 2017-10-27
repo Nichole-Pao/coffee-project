@@ -1,7 +1,9 @@
 "use strict"
 var tbody = document.querySelector('#coffees');
 var submitButton = document.querySelector('#submit');
-    var roastSelection = document.querySelector('#roast-selection');
+var roastSelection = document.querySelector('#roast-selection');
+var coffeeInput = document.querySelector("#coffeeInput")
+
 
 var coffees = [
     {id: 1, name: 'Light City', roast: 'light'},
@@ -40,36 +42,30 @@ function renderCoffees(coffees) {
 // edit for the all/
 //for the search -- event called input that happens every time i input
 
+
 function updateCoffees(e) {
     e.preventDefault(); // don't submit the form, we just want to update the data
     var selectedRoast = roastSelection.value.toLowerCase();
     var filteredCoffees = [];
-    coffees.forEach(function(coffee) {
-        if (coffee.roast === selectedRoast) {
-            filteredCoffees.push(coffee);
-        } else if (coffee.roast !== selectedRoast) {
-            //xxxxxxxxxxxxxxxxxxxxxxxx;
+    coffees.forEach(function (coffee) {
+
+        if(selectedRoast === "all"){
+            if (coffee.name.indexOf(coffeeInput.value) > - 1 ) {
+                filteredCoffees.push(coffee);
+            }
         }
+        if (coffee.roast === selectedRoast) {
+            if (coffee.name.indexOf(coffeeInput.value) > - 1 ) {
+                filteredCoffees.push(coffee);
+            }
+        };
     });
     tbody.innerHTML = renderCoffees(filteredCoffees);
-}
-
-// from http://www.ncausa.org/About-Coffee/Coffee-Roasts-Guide
-
-
-
-
-// function filterItems(query) {
-//     return coffees.filter(function(el) {
-//         return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
-//     })
-// };
-//
-// console.log(filterItems('cit'));
-// console.log(filterItems('eur'));
+};
 
 tbody.innerHTML = renderCoffees(coffees);
 
 roastSelection.addEventListener('change', updateCoffees);
+coffeeInput.addEventListener("keyup", updateCoffees);
 
 
